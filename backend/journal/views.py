@@ -10,6 +10,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import Entry
 from .serializers import EntrySerializer, RegisterSerializer, UserSerializer
+from .security import AuthRateThrottle, EntryRateThrottle, sanitize_text
 
 
 def index(request):
@@ -20,6 +21,7 @@ def index(request):
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = [AllowAny]
+    throttle_classes = [AuthRateThrottle]
     serializer_class = RegisterSerializer
 
     def create(self, request, *args, **kwargs):
@@ -46,11 +48,12 @@ class CurrentUserView(generics.RetrieveAPIView):
 class EntryViewSet(viewsets.ModelViewSet):
     serializer_class = EntrySerializer
     permission_classes = [IsAuthenticated]
+    throttle_classes = [EntryRateThrottle]
 
     def get_queryset(self):
         """
-        Scoped to the authenticated user only.
-        Users will never see each other's data.
+        Scoped strictly to the authenticated user only.
+        Users can never access or modify another user's journal entries.
         """
         queryset = Entry.objects.filter(owner=self.request.user).order_by('-date')
 
@@ -60,11 +63,14 @@ class EntryViewSet(viewsets.ModelViewSet):
         if year and month:
             try:
                 queryset = queryset.filter(date__year=int(year), date__month=int(month))
-            except ValueError:
+            except (ValueError, TypeError):
                 pass
         return queryset
 
     def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    def perform_update(self, serializer):
         serializer.save(owner=self.request.user)
 
     @action(detail=False, methods=['get'], url_path='by-date')
@@ -80,7 +86,7 @@ class EntryViewSet(viewsets.ModelViewSet):
             )
         try:
             target_date = date.fromisoformat(target_date_str)
-        except ValueError:
+        except (ValueError, TypeError):
             return Response(
                 {'error': 'Invalid date format. Use YYYY-MM-DD.'},
                 status=status.HTTP_400_BAD_REQUEST
@@ -94,25 +100,21 @@ class EntryViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['post'], url_path='upsert')
     def upsert_by_date(self, request):
         """
-        Create or update journal entry for a specific date.
+        Create or update journal entry for a specific date with validation.
         """
         target_date_str = request.data.get('date')
-        content = request.data.get('content', '').strip()
+        raw_content = request.data.get('content', '')
 
-        if not target_date_str:
-            return Response({'error': 'date is required.'}, status=status.HTTP_400_BAD_REQUEST)
-        if not content:
-            return Response({'error': 'content cannot be empty.'}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = EntrySerializer(data={'date': target_date_str, 'content': raw_content})
+        serializer.is_valid(raise_exception=True)
 
-        try:
-            target_date = date.fromisoformat(target_date_str)
-        except ValueError:
-            return Response({'error': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
+        target_date = serializer.validated_data['date']
+        clean_content = serializer.validated_data['content']
 
         entry, created = Entry.objects.update_or_create(
             owner=request.user,
             date=target_date,
-            defaults={'content': content}
+            defaults={'content': clean_content}
         )
         return Response(
             EntrySerializer(entry).data,
@@ -171,3 +173,4 @@ class EntryViewSet(viewsets.ModelViewSet):
             'active_dates': active_dates,
             'today': today.isoformat()
         })
+

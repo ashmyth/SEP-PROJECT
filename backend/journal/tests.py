@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
+from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Entry
 
 
@@ -20,22 +21,14 @@ class JournalAPITests(APITestCase):
             password='ComplexPassword123!'
         )
 
-        # Login user 1
-        login_url = reverse('token_obtain_pair')
-        response = self.client.post(login_url, {
-            'username': 'alice',
-            'password': 'ComplexPassword123!'
-        }, format='json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.user1_access = response.data['access']
-        self.user1_refresh = response.data['refresh']
+        # Generate JWT tokens for test users
+        refresh1 = RefreshToken.for_user(self.user1)
+        self.user1_access = str(refresh1.access_token)
+        self.user1_refresh = str(refresh1)
 
-        # Login user 2
-        response2 = self.client.post(login_url, {
-            'username': 'bob',
-            'password': 'ComplexPassword123!'
-        }, format='json')
-        self.user2_access = response2.data['access']
+        refresh2 = RefreshToken.for_user(self.user2)
+        self.user2_access = str(refresh2.access_token)
+        self.user2_refresh = str(refresh2)
 
     def test_user_registration(self):
         url = reverse('auth_register')
@@ -62,7 +55,7 @@ class JournalAPITests(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    def test_create_and_scope_entries(self):
+    def test_user_data_isolation(self):
         # Alice creates an entry
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.user1_access}')
         today = date.today().isoformat()
@@ -135,3 +128,26 @@ class JournalAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['total_entries'], 3)
         self.assertGreaterEqual(response.data['current_streak'], 3)
+
+    def test_security_headers_present(self):
+        """Verify defense-in-depth security headers on all responses."""
+        response = self.client.get(reverse('auth_register'))
+        self.assertEqual(response.headers.get('X-Frame-Options'), 'DENY')
+        self.assertEqual(response.headers.get('X-Content-Type-Options'), 'nosniff')
+        self.assertEqual(response.headers.get('Referrer-Policy'), 'strict-origin-when-cross-origin')
+        self.assertIn("default-src 'self'", response.headers.get('Content-Security-Policy', ''))
+
+    def test_input_sanitization_and_xss_protection(self):
+        """Verify HTML script injection is escaped in stored reflections."""
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.user1_access}')
+        upsert_url = reverse('entry-upsert-by-date')
+
+        xss_payload = '<script>alert("hacked")</script> Grateful for safety!'
+        response = self.client.post(upsert_url, {
+            'date': (date.today() - timedelta(days=1)).isoformat(),
+            'content': xss_payload
+        }, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertNotIn('<script>', response.data['content'])
+        self.assertIn('&lt;script&gt;', response.data['content'])
+
