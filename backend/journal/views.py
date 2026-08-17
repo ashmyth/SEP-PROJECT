@@ -13,9 +13,18 @@ from .serializers import EntrySerializer, RegisterSerializer, UserSerializer
 from .security import AuthRateThrottle, EntryRateThrottle, sanitize_text
 
 
+from django.views.decorators.cache import never_cache
+
+
+@never_cache
 def index(request):
-    """Serve the single-page React frontend."""
-    return render(request, "index.html")
+    """Serve the single-page React frontend with no-cache headers."""
+    response = render(request, "index.html")
+    response["Cache-Control"] = "no-cache, no-store, must-revalidate, max-age=0"
+    response["Pragma"] = "no-cache"
+    response["Expires"] = "0"
+    return response
+
 
 
 class RegisterView(generics.CreateAPIView):
