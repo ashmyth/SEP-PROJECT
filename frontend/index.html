@@ -4,32 +4,32 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Solis — Daily Gratitude Journal</title>
-    <meta name="description" content="A private, mindful sanctuary to write one paragraph of gratitude a day." />
-    <meta name="theme-color" content="#FAF7F2" />
+    <meta name="description" content="A private, minimal sanctuary to write one paragraph of gratitude a day." />
+    <meta name="theme-color" content="#FBF9F5" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 
-    <!-- Google Fonts -->
+    <!-- Premium Google Fonts: Newsreader, Inter, JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap"
       rel="stylesheet"
     />
 
     <!-- Vendored CSS & Libraries with cache busters -->
-    <link rel="stylesheet" href="/static/dist/output.css?v=20260817b" />
+    <link rel="stylesheet" href="/static/dist/output.css?v=20260817c" />
     <script src="/static/vendor/react.js"></script>
     <script src="/static/vendor/react-dom.js"></script>
     <script src="/static/vendor/axios.min.js"></script>
     <script src="/static/vendor/framer-motion.js"></script>
     <script src="/static/vendor/confetti.js"></script>
   </head>
-  <body class="bg-[#FAF7F2] text-[#2D2319] antialiased selection:bg-amber-200 selection:text-amber-950 min-h-screen overflow-x-hidden">
+  <body class="bg-[#FBF9F5] text-[#1C1917] antialiased selection:bg-[#E7E5E4] selection:text-[#1C1917] min-h-screen">
     <div id="root">
-      <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#8C7D70;font-family:'Plus Jakarta Sans',sans-serif;background:#FAF7F2">
-        <div style="width:40px;height:40px;border-radius:50%;border:2px solid rgba(217,119,6,0.2);border-top-color:#D97706;animation:spin 1s linear infinite;margin-bottom:16px"></div>
-        <div style="font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:0.15em;text-transform:uppercase;color:#81563B;font-weight:600">Entering Solis Sanctuary...</div>
+      <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#78716C;font-family:'Inter',sans-serif;background:#FBF9F5">
+        <div style="width:28px;height:28px;border-radius:50%;border:2px solid #E7E5E4;border-top-color:#1C1917;animation:spin 0.8s linear infinite;margin-bottom:12px"></div>
+        <div style="font-family:'Newsreader',serif;font-size:16px;letter-spacing:0.04em;color:#44403C;font-style:italic">Entering Solis...</div>
       </div>
     </div>
 
@@ -40,13 +40,13 @@
         if (root && !root.dataset.mounted) {
           var msg = (e && (e.message || (e.error && e.error.message))) || 'Unknown error';
           root.innerHTML =
-            '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;color:#b91c1c;font-family:sans-serif;text-align:center;background:#FAF7F2">' +
-            '<div style="max-width:560px"><div style="font-weight:700;font-size:18px;margin-bottom:8px">Failed to load sanctuary</div>' +
+            '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;color:#991B1B;font-family:sans-serif;text-align:center;background:#FBF9F5">' +
+            '<div style="max-width:520px"><div style="font-weight:600;font-size:16px;margin-bottom:8px">Unable to load journal</div>' +
             '<div style="font-size:13px;opacity:.85;word-break:break-word">' + msg + '</div></div></div>';
         }
       });
     </script>
 
-    <script src="/static/app.js?v=20260817b"></script>
+    <script src="/static/app.js?v=20260817c"></script>
   </body>
 </html>
