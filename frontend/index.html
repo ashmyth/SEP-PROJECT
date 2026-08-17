@@ -1,0 +1,53 @@
+﻿<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Solis — Daily Gratitude Journal</title>
+    <meta
+      name="description"
+      content="A private, mindful sanctuary to write one paragraph of gratitude a day."
+    />
+    <meta name="theme-color" content="#07090E" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Vendored CSS & Libraries -->
+    <link rel="stylesheet" href="/static/dist/output.css" />
+    <script src="/static/vendor/react.js"></script>
+    <script src="/static/vendor/react-dom.js"></script>
+    <script src="/static/vendor/axios.min.js"></script>
+    <script src="/static/vendor/framer-motion.js"></script>
+    <script src="/static/vendor/confetti.js"></script>
+  </head>
+  <body class="bg-[#07090E] text-slate-100 antialiased selection:bg-amber-400 selection:text-black min-h-screen overflow-x-hidden">
+    <div id="root">
+      <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#94A3B8;font-family:'Plus Jakarta Sans',sans-serif;background:#07090E">
+        <div style="width:40px;height:40px;border-radius:50%;border:2px solid rgba(245,158,11,0.2);border-top-color:#F59E0B;animation:spin 1s linear infinite;margin-bottom:16px"></div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:18px;letter-spacing:0.15em;text-transform:uppercase;color:#FDE68A">Entering Solis Sanctuary...</div>
+      </div>
+    </div>
+
+    <!-- Surface any load/runtime error instead of a blank white screen -->
+    <script>
+      window.addEventListener('error', function (e) {
+        var root = document.getElementById('root');
+        if (root && !root.dataset.mounted) {
+          var msg = (e && (e.message || (e.error && e.error.message))) || 'Unknown error';
+          root.innerHTML =
+            '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;color:#fca5a5;font-family:sans-serif;text-align:center;background:#07090E">' +
+            '<div style="max-width:560px"><div style="font-weight:700;font-size:18px;margin-bottom:8px">Failed to load sanctuary</div>' +
+            '<div style="font-size:13px;opacity:.85;word-break:break-word">' + msg + '</div></div></div>';
+        }
+      });
+    </script>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
