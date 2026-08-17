@@ -376,8 +376,9 @@ function Navbar({ activeTab, setActiveTab, stats, onOpenPromptModal, onOpenStats
         // Streak Pill
         h("button", {
           onClick: onOpenStatsModal,
+          "aria-label": "Open Gratitude Streak Insights",
           title: "Gratitude Streak Insights",
-          className: "flex items-center gap-2 bg-[#0E1118]/90 backdrop-blur-xl border border-amber-500/20 hover:border-amber-400/50 px-3.5 py-2 rounded-full text-xs transition-all shadow-lg"
+          className: "flex items-center gap-2 bg-[#0E1118]/90 backdrop-blur-xl border border-amber-500/20 hover:border-amber-400/50 px-3.5 py-2 rounded-full text-xs transition-all shadow-lg focus:ring-2 focus:ring-amber-400/40"
         },
           h("span", { className: "text-amber-400 text-sm" }, "🔥"),
           h("span", { className: "font-mono font-bold text-amber-300 text-xs" }, stats?.current_streak || 0),
@@ -387,23 +388,27 @@ function Navbar({ activeTab, setActiveTab, stats, onOpenPromptModal, onOpenStats
         // Prompts Trigger
         h("button", {
           onClick: onOpenPromptModal,
+          "aria-label": "Browse Daily Reflection Prompts",
           title: "Browse Daily Prompts",
-          className: "p-2.5 rounded-full bg-[#0E1118]/90 backdrop-blur-xl border border-white/10 hover:border-amber-400/40 text-amber-300/80 hover:text-amber-200 transition-all shadow-lg"
+          className: "p-2.5 rounded-full bg-[#0E1118]/90 backdrop-blur-xl border border-white/10 hover:border-amber-400/40 text-amber-300/80 hover:text-amber-200 transition-all shadow-lg focus:ring-2 focus:ring-amber-400/40"
         }, "✨"),
 
         // Sound Toggle
         h("button", {
           onClick: toggleSound,
+          "aria-label": soundEnabled ? "Disable Audio Chimes" : "Enable Audio Chimes",
           title: soundEnabled ? "Chime Enabled" : "Chime Muted",
-          className: "p-2.5 rounded-full bg-[#0E1118]/90 backdrop-blur-xl border border-white/10 hover:border-amber-400/40 text-slate-300 transition-all shadow-lg text-xs"
+          className: "p-2.5 rounded-full bg-[#0E1118]/90 backdrop-blur-xl border border-white/10 hover:border-amber-400/40 text-slate-300 transition-all shadow-lg text-xs focus:ring-2 focus:ring-amber-400/40"
         }, soundEnabled ? "🔔" : "🔕"),
 
         // User Dropdown
         h("div", { className: "relative" },
           h("button", {
             onClick: () => setShowMenu(!showMenu),
+            "aria-label": "Toggle User Menu",
             className: "flex items-center gap-2 bg-[#0E1118]/90 backdrop-blur-xl border border-white/10 hover:border-white/20 pl-2 pr-3 py-1.5 rounded-full text-xs text-slate-200 transition-all shadow-lg"
           },
+
             h("div", { className: "w-6 h-6 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-[11px] font-bold text-black" },
               (user?.username?.charAt(0).toUpperCase() || "U")
             ),
@@ -824,10 +829,20 @@ function EntryEditor({ dateStr, initialContent, onSave, onDelete, onNavigateDate
               ref: textareaRef,
               value: content,
               onChange: (e) => setContent(e.target.value),
+              onKeyDown: (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+                  e.preventDefault();
+                  handleSave();
+                }
+              },
               placeholder: "What brought peace, light, connection, or quiet joy to your world today? Pen your one paragraph...",
               rows: 7,
-              className: "w-full rounded-2xl bg-[#090B10]/90 border border-white/10 focus:border-amber-400/50 focus:ring-2 focus:ring-amber-400/20 p-4 md:p-5 text-slate-100 text-sm md:text-base font-serif placeholder:font-sans placeholder:text-slate-600 placeholder:text-xs leading-relaxed focus:outline-none transition-all resize-none shadow-inner"
-            })
+              "aria-label": "Daily Gratitude Reflection Text Area",
+              className: "w-full rounded-2xl bg-[#090B10]/90 border border-white/10 focus:border-amber-400/50 focus:ring-2 focus:ring-amber-400/20 p-4 md:p-5 text-slate-100 text-sm md:text-base font-serif placeholder:font-sans placeholder:text-slate-500 placeholder:text-xs leading-relaxed focus:outline-none transition-all resize-none shadow-inner"
+            }),
+            h("div", { className: "absolute bottom-3 right-4 hidden sm:block text-[10px] font-mono text-slate-500 pointer-events-none" },
+              "Ctrl + Enter to commit"
+            )
           )
         ),
 
@@ -843,8 +858,9 @@ function EntryEditor({ dateStr, initialContent, onSave, onDelete, onNavigateDate
             initialContent && !showConfirmDelete && (
               h("button", {
                 onClick: () => setShowConfirmDelete(true),
+                "aria-label": "Delete reflection",
                 title: "Delete reflection",
-                className: "p-2 rounded-full text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 transition-colors text-xs"
+                className: "p-2 rounded-full text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors text-xs"
               }, "🗑️")
             ),
 
@@ -863,6 +879,7 @@ function EntryEditor({ dateStr, initialContent, onSave, onDelete, onNavigateDate
             h("button", {
               onClick: handleSave,
               disabled: isSaving,
+              "aria-label": "Commit gratitude reflection",
               className: "btn-island bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-black shadow-xl shadow-amber-500/20 active:scale-[0.98]"
             },
               h("span", null, isSaving ? "Preserving..." : isSaved ? "Preserved in Gold ✨" : "Commit Gratitude"),
@@ -870,6 +887,7 @@ function EntryEditor({ dateStr, initialContent, onSave, onDelete, onNavigateDate
             )
           )
         )
+
 
       )
     )
