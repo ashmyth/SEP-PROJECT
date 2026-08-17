@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Solis — Daily Gratitude Journal</title>
     <meta name="description" content="A private, mindful sanctuary to write one paragraph of gratitude a day." />
-    <meta name="theme-color" content="#07090E" />
+    <meta name="theme-color" content="#FAF7F2" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 
@@ -25,11 +25,11 @@
     <script src="/static/vendor/framer-motion.js"></script>
     <script src="/static/vendor/confetti.js"></script>
   </head>
-  <body class="bg-[#07090E] text-slate-100 antialiased selection:bg-amber-400 selection:text-black min-h-screen overflow-x-hidden">
+  <body class="bg-[#FAF7F2] text-[#2D2319] antialiased selection:bg-amber-200 selection:text-amber-950 min-h-screen overflow-x-hidden">
     <div id="root">
-      <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#94A3B8;font-family:'Plus Jakarta Sans',sans-serif;background:#07090E">
-        <div style="width:40px;height:40px;border-radius:50%;border:2px solid rgba(245,158,11,0.2);border-top-color:#F59E0B;animation:spin 1s linear infinite;margin-bottom:16px"></div>
-        <div style="font-family:'Cormorant Garamond',serif;font-size:18px;letter-spacing:0.15em;text-transform:uppercase;color:#FDE68A">Entering Solis Sanctuary...</div>
+      <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#8C7D70;font-family:'Plus Jakarta Sans',sans-serif;background:#FAF7F2">
+        <div style="width:40px;height:40px;border-radius:50%;border:2px solid rgba(217,119,6,0.2);border-top-color:#D97706;animation:spin 1s linear infinite;margin-bottom:16px"></div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:0.15em;text-transform:uppercase;color:#81563B;font-weight:600">Entering Solis Sanctuary...</div>
       </div>
     </div>
 
@@ -40,12 +40,13 @@
         if (root && !root.dataset.mounted) {
           var msg = (e && (e.message || (e.error && e.error.message))) || 'Unknown error';
           root.innerHTML =
-            '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;color:#fca5a5;font-family:sans-serif;text-align:center;background:#07090E">' +
+            '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;color:#b91c1c;font-family:sans-serif;text-align:center;background:#FAF7F2">' +
             '<div style="max-width:560px"><div style="font-weight:700;font-size:18px;margin-bottom:8px">Failed to load sanctuary</div>' +
             '<div style="font-size:13px;opacity:.85;word-break:break-word">' + msg + '</div></div></div>';
         }
       });
     </script>
+
 
     <script src="/static/app.js"></script>
   </body>

@@ -1,6 +1,6 @@
 // ===========================================================================
 // SOLIS — Daily Gratitude Journal
-// Pure React + Tailwind Architecture (Zero Vite / Zero Bundler dependencies)
+// Pure React + Tailwind Light Creamish Dreamy Aesthetic
 // ===========================================================================
 
 const { useState, useEffect, useRef, useMemo, useCallback, createContext, useContext } = React;
@@ -29,7 +29,7 @@ function playChime() {
       const duration = 1.3;
       
       gain.gain.setValueAtTime(0, startTime);
-      gain.gain.linearRampToValueAtTime(0.07, startTime + 0.05);
+      gain.gain.linearRampToValueAtTime(0.06, startTime + 0.05);
       gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
       
       osc.connect(gain);
@@ -39,7 +39,7 @@ function playChime() {
       osc.stop(startTime + duration);
     });
   } catch (e) {
-    // Audio contexts may be restricted before user interaction
+    // Audio context may require user interaction
   }
 }
 
@@ -49,7 +49,7 @@ function playChime() {
 const GRATITUDE_PROMPTS = [
   {
     category: "Sensory Delights",
-    prompt: "What simple comfort or small sensory pleasure (warm light, crisp morning air, hot tea) brought you quiet peace today?"
+    prompt: "What simple comfort or small sensory pleasure (warm morning light, crisp air, floral scent, warm tea) brought you quiet peace today?"
   },
   {
     category: "Human Kindness",
@@ -61,7 +61,7 @@ const GRATITUDE_PROMPTS = [
   },
   {
     category: "Living World",
-    prompt: "What detail in the sky, trees, changing light, or architecture made you pause and appreciate the present?"
+    prompt: "What detail in the sky, golden clouds, trees, or gentle breeze made you pause and smile?"
   },
   {
     category: "Self Gratitude",
@@ -94,13 +94,12 @@ const INSPIRATIONAL_QUOTES = [
 // 3. Axios Interceptor & JWT Authentication Architecture
 // ---------------------------------------------------------------------------
 const api = axios.create({
-  baseURL: "", // same origin
+  baseURL: "",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Request Interceptor: Attach Access Token
 api.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem("solis_access_token");
@@ -112,7 +111,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response Interceptor: Catch 401, Refresh Token, and Retry
 let isRefreshing = false;
 let failedQueue = [];
 
@@ -318,9 +316,9 @@ function ProtectedRoute({ children, fallback }) {
   const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
-    return h("div", { className: "min-h-screen flex flex-col items-center justify-center bg-[#07090E] text-slate-300 p-6" },
-      h("div", { className: "w-12 h-12 rounded-full border-2 border-amber-400/20 border-t-amber-400 animate-spin mb-4" }),
-      h("p", { className: "font-serif text-sm uppercase tracking-widest text-amber-200/80" }, "Entering Sanctuary...")
+    return h("div", { className: "min-h-screen flex flex-col items-center justify-center bg-[#FAF7F2] text-[#8C7D70] p-6" },
+      h("div", { className: "w-12 h-12 rounded-full border-2 border-amber-600/20 border-t-amber-600 animate-spin mb-4" }),
+      h("p", { className: "font-serif text-sm uppercase tracking-widest text-[#81563B] font-semibold" }, "Entering Sanctuary...")
     );
   }
 
@@ -332,7 +330,7 @@ function ProtectedRoute({ children, fallback }) {
 }
 
 // ---------------------------------------------------------------------------
-// 6. Navbar Component (Floating Glass Island)
+// 6. Navbar Component (Floating Light Glass Island)
 // ---------------------------------------------------------------------------
 function Navbar({ activeTab, setActiveTab, stats, onOpenPromptModal, onOpenStatsModal, soundEnabled, setSoundEnabled }) {
   const { user, logout } = useAuth();
@@ -348,25 +346,25 @@ function Navbar({ activeTab, setActiveTab, stats, onOpenPromptModal, onOpenStats
     h("div", { className: "max-w-6xl mx-auto flex items-center justify-between pointer-events-auto" },
       
       // Brand
-      h("div", { className: "flex items-center gap-3 bg-[#0E1118]/90 backdrop-blur-xl border border-white/10 px-4 py-2 rounded-full shadow-2xl" },
-        h("div", { className: "w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 to-amber-300 flex items-center justify-center shadow-lg shadow-amber-500/20 text-black font-serif font-bold text-sm" }, "✦"),
+      h("div", { className: "flex items-center gap-3 bg-white/85 backdrop-blur-xl border border-amber-900/10 px-4 py-2 rounded-full shadow-lg shadow-amber-900/5" },
+        h("div", { className: "w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center shadow-md shadow-amber-500/20 text-white font-serif font-bold text-sm" }, "✦"),
         h("div", { className: "flex items-center gap-1.5" },
-          h("span", { className: "font-serif font-bold text-base tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400" }, "SOLIS"),
-          h("span", { className: "text-[9px] uppercase font-mono tracking-widest text-amber-400/90 bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/20 hidden sm:inline" }, "Journal")
+          h("span", { className: "font-serif font-bold text-base tracking-wider text-[#2D2319]" }, "SOLIS"),
+          h("span", { className: "text-[9px] uppercase font-mono tracking-widest text-amber-800 bg-amber-100/70 px-1.5 py-0.5 rounded border border-amber-300/60 hidden sm:inline" }, "Journal")
         )
       ),
 
       // Center View Tabs
-      h("nav", { className: "hidden md:flex items-center gap-1 bg-[#0E1118]/90 backdrop-blur-xl border border-white/10 p-1.5 rounded-full shadow-2xl" },
+      h("nav", { className: "hidden md:flex items-center gap-1 bg-white/85 backdrop-blur-xl border border-amber-900/10 p-1.5 rounded-full shadow-lg shadow-amber-900/5" },
         h("button", {
           onClick: () => setActiveTab("calendar"),
           className: "flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium transition-all duration-300 " + 
-            (activeTab === "calendar" ? "bg-amber-400/15 text-amber-200 border border-amber-400/30 shadow-inner" : "text-slate-400 hover:text-slate-200 hover:bg-white/5")
+            (activeTab === "calendar" ? "bg-amber-100/90 text-amber-950 font-semibold border border-amber-300/80 shadow-sm" : "text-[#7A6B5D] hover:text-[#2D2319] hover:bg-amber-50/60")
         }, "📅 Calendar Sanctuary"),
         h("button", {
           onClick: () => setActiveTab("timeline"),
           className: "flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium transition-all duration-300 " + 
-            (activeTab === "timeline" ? "bg-amber-400/15 text-amber-200 border border-amber-400/30 shadow-inner" : "text-slate-400 hover:text-slate-200 hover:bg-white/5")
+            (activeTab === "timeline" ? "bg-amber-100/90 text-amber-950 font-semibold border border-amber-300/80 shadow-sm" : "text-[#7A6B5D] hover:text-[#2D2319] hover:bg-amber-50/60")
         }, "📖 Chronicle Timeline")
       ),
 
@@ -378,11 +376,11 @@ function Navbar({ activeTab, setActiveTab, stats, onOpenPromptModal, onOpenStats
           onClick: onOpenStatsModal,
           "aria-label": "Open Gratitude Streak Insights",
           title: "Gratitude Streak Insights",
-          className: "flex items-center gap-2 bg-[#0E1118]/90 backdrop-blur-xl border border-amber-500/20 hover:border-amber-400/50 px-3.5 py-2 rounded-full text-xs transition-all shadow-lg focus:ring-2 focus:ring-amber-400/40"
+          className: "flex items-center gap-2 bg-white/85 backdrop-blur-xl border border-amber-300/80 hover:border-amber-500 px-3.5 py-2 rounded-full text-xs transition-all shadow-md shadow-amber-900/5 focus:ring-2 focus:ring-amber-500/40"
         },
-          h("span", { className: "text-amber-400 text-sm" }, "🔥"),
-          h("span", { className: "font-mono font-bold text-amber-300 text-xs" }, stats?.current_streak || 0),
-          h("span", { className: "text-slate-400 text-[11px] hidden sm:inline" }, (stats?.current_streak === 1 ? "day" : "days"))
+          h("span", { className: "text-amber-600 text-sm" }, "🔥"),
+          h("span", { className: "font-mono font-bold text-amber-900 text-xs" }, stats?.current_streak || 0),
+          h("span", { className: "text-[#7A6B5D] text-[11px] hidden sm:inline" }, (stats?.current_streak === 1 ? "day" : "days"))
         ),
 
         // Prompts Trigger
@@ -390,7 +388,7 @@ function Navbar({ activeTab, setActiveTab, stats, onOpenPromptModal, onOpenStats
           onClick: onOpenPromptModal,
           "aria-label": "Browse Daily Reflection Prompts",
           title: "Browse Daily Prompts",
-          className: "p-2.5 rounded-full bg-[#0E1118]/90 backdrop-blur-xl border border-white/10 hover:border-amber-400/40 text-amber-300/80 hover:text-amber-200 transition-all shadow-lg focus:ring-2 focus:ring-amber-400/40"
+          className: "p-2.5 rounded-full bg-white/85 backdrop-blur-xl border border-amber-900/10 hover:border-amber-400 text-amber-700 hover:text-amber-900 transition-all shadow-md shadow-amber-900/5 focus:ring-2 focus:ring-amber-500/40"
         }, "✨"),
 
         // Sound Toggle
@@ -398,7 +396,7 @@ function Navbar({ activeTab, setActiveTab, stats, onOpenPromptModal, onOpenStats
           onClick: toggleSound,
           "aria-label": soundEnabled ? "Disable Audio Chimes" : "Enable Audio Chimes",
           title: soundEnabled ? "Chime Enabled" : "Chime Muted",
-          className: "p-2.5 rounded-full bg-[#0E1118]/90 backdrop-blur-xl border border-white/10 hover:border-amber-400/40 text-slate-300 transition-all shadow-lg text-xs focus:ring-2 focus:ring-amber-400/40"
+          className: "p-2.5 rounded-full bg-white/85 backdrop-blur-xl border border-amber-900/10 hover:border-amber-400 text-[#7A6B5D] hover:text-[#2D2319] transition-all shadow-md shadow-amber-900/5 text-xs focus:ring-2 focus:ring-amber-500/40"
         }, soundEnabled ? "🔔" : "🔕"),
 
         // User Dropdown
@@ -406,30 +404,29 @@ function Navbar({ activeTab, setActiveTab, stats, onOpenPromptModal, onOpenStats
           h("button", {
             onClick: () => setShowMenu(!showMenu),
             "aria-label": "Toggle User Menu",
-            className: "flex items-center gap-2 bg-[#0E1118]/90 backdrop-blur-xl border border-white/10 hover:border-white/20 pl-2 pr-3 py-1.5 rounded-full text-xs text-slate-200 transition-all shadow-lg"
+            className: "flex items-center gap-2 bg-white/85 backdrop-blur-xl border border-amber-900/10 hover:border-amber-300 pl-2 pr-3 py-1.5 rounded-full text-xs text-[#2D2319] transition-all shadow-md shadow-amber-900/5"
           },
-
-            h("div", { className: "w-6 h-6 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-[11px] font-bold text-black" },
+            h("div", { className: "w-6 h-6 rounded-full bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-[11px] font-bold text-white shadow-sm" },
               (user?.username?.charAt(0).toUpperCase() || "U")
             ),
             h("span", { className: "max-w-[80px] truncate font-medium hidden sm:inline" }, user?.username)
           ),
 
           showMenu && h("div", {
-            className: "absolute right-0 mt-2 w-48 rounded-2xl bg-[#0E1118]/98 backdrop-blur-2xl border border-white/10 shadow-2xl p-2 z-50",
+            className: "absolute right-0 mt-2 w-48 rounded-2xl bg-white/98 backdrop-blur-2xl border border-amber-200/80 shadow-2xl p-2 z-50 animate-in fade-in",
             onClick: () => setShowMenu(false)
           },
-            h("div", { className: "px-3 py-2 border-b border-white/5 mb-1" },
-              h("p", { className: "text-[10px] text-slate-400 font-mono" }, "Signed in as"),
-              h("p", { className: "text-xs font-semibold text-slate-200 truncate mt-0.5" }, user?.username)
+            h("div", { className: "px-3 py-2 border-b border-amber-900/10 mb-1" },
+              h("p", { className: "text-[10px] text-[#8C7D70] font-mono" }, "Signed in as"),
+              h("p", { className: "text-xs font-semibold text-[#2D2319] truncate mt-0.5" }, user?.username)
             ),
             h("button", {
               onClick: onOpenStatsModal,
-              className: "w-full text-left px-3 py-2 rounded-xl text-xs text-slate-300 hover:text-amber-200 hover:bg-white/5 transition-colors"
+              className: "w-full text-left px-3 py-2 rounded-xl text-xs text-[#4A3B2C] hover:text-amber-900 hover:bg-amber-50 transition-colors"
             }, "📊 Gratitude Stats"),
             h("button", {
               onClick: logout,
-              className: "w-full text-left px-3 py-2 rounded-xl text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 transition-colors mt-1"
+              className: "w-full text-left px-3 py-2 rounded-xl text-xs text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition-colors mt-1"
             }, "🚪 Sign Out")
           )
         )
@@ -438,16 +435,16 @@ function Navbar({ activeTab, setActiveTab, stats, onOpenPromptModal, onOpenStats
 
     // Mobile View Selector
     h("div", { className: "md:hidden flex justify-center mt-2 pointer-events-auto" },
-      h("nav", { className: "flex items-center gap-1 bg-[#0E1118]/90 backdrop-blur-xl border border-white/10 p-1 rounded-full shadow-2xl" },
+      h("nav", { className: "flex items-center gap-1 bg-white/90 backdrop-blur-xl border border-amber-900/10 p-1 rounded-full shadow-lg" },
         h("button", {
           onClick: () => setActiveTab("calendar"),
           className: "px-3 py-1 rounded-full text-xs font-medium " + 
-            (activeTab === "calendar" ? "bg-amber-400/20 text-amber-200 border border-amber-400/30" : "text-slate-400")
+            (activeTab === "calendar" ? "bg-amber-100 text-amber-950 font-semibold border border-amber-300" : "text-[#7A6B5D]")
         }, "📅 Calendar"),
         h("button", {
           onClick: () => setActiveTab("timeline"),
           className: "px-3 py-1 rounded-full text-xs font-medium " + 
-            (activeTab === "timeline" ? "bg-amber-400/20 text-amber-200 border border-amber-400/30" : "text-slate-400")
+            (activeTab === "timeline" ? "bg-amber-100 text-amber-950 font-semibold border border-amber-300" : "text-[#7A6B5D]")
         }, "📖 Timeline")
       )
     )
@@ -455,7 +452,7 @@ function Navbar({ activeTab, setActiveTab, stats, onOpenPromptModal, onOpenStats
 }
 
 // ---------------------------------------------------------------------------
-// 7. Calendar View Component (Mindful Matrix)
+// 7. Calendar View Component (Mindful Light Matrix)
 // ---------------------------------------------------------------------------
 const MONTH_NAMES = [
   "January", "February", "March", "April", "May", "June",
@@ -568,29 +565,31 @@ function CalendarView({ selectedDate, onSelectDate, activeDatesSet, entriesMap, 
       h("div", { className: "double-bezel-inner p-5 md:p-8" },
         
         // Header
-        h("div", { className: "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5 border-b border-white/5" },
+        h("div", { className: "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5 border-b border-amber-900/10" },
           h("div", null,
             h("div", { className: "flex items-center gap-2 mb-1" },
-              h("span", { className: "w-2 h-2 rounded-full bg-amber-400 animate-pulse" }),
-              h("span", { className: "text-[10px] uppercase font-mono tracking-widest text-amber-300/80" }, "Calendar Sanctuary")
+              h("span", { className: "w-2 h-2 rounded-full bg-amber-500 animate-pulse" }),
+              h("span", { className: "text-[10px] uppercase font-mono tracking-widest text-amber-800 font-semibold" }, "Calendar Sanctuary")
             ),
-            h("h2", { className: "font-serif text-2xl md:text-3xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-300" },
+            h("h2", { className: "font-serif text-2xl md:text-3xl font-bold tracking-tight text-amber-950" },
               MONTH_NAMES[viewMonth] + " " + viewYear
             )
           ),
           h("div", { className: "flex items-center gap-2 self-end sm:self-center" },
             h("button", {
               onClick: handleJumpToToday,
-              className: "px-3 py-1.5 rounded-full bg-white/5 hover:bg-amber-400/20 border border-white/10 hover:border-amber-400/30 text-xs font-medium text-slate-300 hover:text-amber-200 transition-all"
+              className: "px-3 py-1.5 rounded-full bg-amber-50 hover:bg-amber-100 border border-amber-200 text-xs font-medium text-amber-900 transition-all shadow-sm"
             }, "Today"),
-            h("div", { className: "flex items-center bg-white/5 border border-white/10 rounded-full p-0.5" },
+            h("div", { className: "flex items-center bg-amber-50 border border-amber-200 rounded-full p-0.5 shadow-sm" },
               h("button", {
                 onClick: handlePrevMonth,
-                className: "p-1.5 rounded-full text-slate-400 hover:text-amber-200 hover:bg-white/10 transition-colors"
+                "aria-label": "Previous Month",
+                className: "p-1.5 rounded-full text-amber-800 hover:text-amber-950 hover:bg-amber-100 transition-colors"
               }, "←"),
               h("button", {
                 onClick: handleNextMonth,
-                className: "p-1.5 rounded-full text-slate-400 hover:text-amber-200 hover:bg-white/10 transition-colors"
+                "aria-label": "Next Month",
+                className: "p-1.5 rounded-full text-amber-800 hover:text-amber-950 hover:bg-amber-100 transition-colors"
               }, "→")
             )
           )
@@ -599,7 +598,7 @@ function CalendarView({ selectedDate, onSelectDate, activeDatesSet, entriesMap, 
         // Day of week labels
         h("div", { className: "grid grid-cols-7 gap-1 md:gap-2 my-3 text-center" },
           WEEK_DAYS.map((day) =>
-            h("div", { key: day, className: "text-[10px] md:text-[11px] font-mono uppercase tracking-wider text-slate-400/70 font-semibold py-1" }, day)
+            h("div", { key: day, className: "text-[10px] md:text-[11px] font-mono uppercase tracking-wider text-amber-900/60 font-semibold py-1" }, day)
           )
         ),
 
@@ -613,59 +612,60 @@ function CalendarView({ selectedDate, onSelectDate, activeDatesSet, entriesMap, 
               key: idx,
               onClick: () => onSelectDate(item.dateStr),
               disabled: item.isFuture,
+              "aria-label": "Select date " + item.dateStr,
               className: "relative group flex flex-col items-center justify-between p-2 md:p-3 min-h-[64px] md:min-h-[78px] rounded-2xl transition-all duration-300 " +
                 (isSelected
-                  ? "bg-gradient-to-b from-amber-500/25 to-amber-600/10 border-2 border-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.2)] scale-[1.03] z-10"
+                  ? "bg-gradient-to-b from-amber-100/90 to-amber-200/70 border-2 border-amber-500 shadow-[0_4px_16px_rgba(217,119,6,0.25)] scale-[1.03] z-10 text-amber-950 font-bold"
                   : isToday
-                  ? "bg-white/[0.07] border border-amber-400/40 hover:border-amber-400/70"
+                  ? "bg-amber-50/90 border border-amber-400 hover:border-amber-500 shadow-sm"
                   : item.isCurrentMonth
-                  ? "bg-[#141824]/60 hover:bg-[#1A2030] border border-white/5 hover:border-white/15"
-                  : "bg-black/20 border border-transparent opacity-40 hover:opacity-75") +
+                  ? "bg-[#FCFAF7] hover:bg-amber-50/80 border border-amber-900/10 hover:border-amber-300 shadow-sm"
+                  : "bg-stone-100/50 border border-transparent opacity-40 hover:opacity-70") +
                 (item.isFuture ? " cursor-not-allowed opacity-25" : " cursor-pointer")
             },
               // Day number
               h("div", { className: "w-full flex items-center justify-between" },
                 h("span", {
                   className: "text-xs md:text-sm font-semibold font-mono " +
-                    (isSelected ? "text-amber-200" : isToday ? "text-amber-300" : item.isCurrentMonth ? "text-slate-300" : "text-slate-500")
+                    (isSelected ? "text-amber-950 font-bold" : isToday ? "text-amber-800 font-bold" : item.isCurrentMonth ? "text-[#4A3B2C]" : "text-[#A89989]")
                 }, item.dayNumber),
-                isToday && h("span", { className: "text-[8px] md:text-[9px] font-mono px-1 py-0.2 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30" }, "NOW")
+                isToday && h("span", { className: "text-[8px] md:text-[9px] font-mono px-1 py-0.2 rounded bg-amber-200/70 text-amber-900 border border-amber-300 font-bold" }, "NOW")
               ),
 
               // Center Dot / Check
               h("div", { className: "my-auto flex items-center justify-center" },
                 item.hasEntry ? (
-                  h("div", { className: "w-5 h-5 md:w-6 md:h-6 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center shadow-lg shadow-amber-500/30 text-black text-[11px] font-bold" }, "✓")
+                  h("div", { className: "w-5 h-5 md:w-6 md:h-6 rounded-full bg-gradient-to-tr from-amber-500 to-amber-400 flex items-center justify-center shadow-md shadow-amber-500/30 text-white text-[11px] font-bold" }, "✓")
                 ) : item.isFuture ? (
-                  h("div", { className: "w-1.5 h-1.5 rounded-full bg-white/5" })
+                  h("div", { className: "w-1.5 h-1.5 rounded-full bg-amber-900/10" })
                 ) : (
-                  h("div", { className: "w-2 h-2 rounded-full bg-white/10 group-hover:bg-amber-400/40 transition-colors" })
+                  h("div", { className: "w-2 h-2 rounded-full bg-amber-900/15 group-hover:bg-amber-400 transition-colors" })
                 )
               ),
 
               // Bottom subtle hint
-              h("div", { className: "w-full flex items-center justify-center text-[9px] text-slate-500 font-serif italic" },
-                item.hasEntry ? h("span", { className: "text-amber-200/60 hidden md:inline" }, "chronicled") : null
+              h("div", { className: "w-full flex items-center justify-center text-[9px] text-amber-800 font-serif italic" },
+                item.hasEntry ? h("span", { className: "text-amber-700/80 font-medium hidden md:inline" }, "chronicled") : null
               )
             );
           })
         ),
 
         // Footer summary
-        h("div", { className: "mt-5 pt-4 border-t border-white/5 flex flex-wrap items-center justify-between gap-3 text-xs" },
+        h("div", { className: "mt-5 pt-4 border-t border-amber-900/10 flex flex-wrap items-center justify-between gap-3 text-xs" },
           h("div", { className: "flex items-center gap-3" },
             h("div", { className: "flex items-center gap-1.5" },
-              h("div", { className: "w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.6)]" }),
-              h("span", { className: "text-slate-300 font-medium text-[11px]" }, "Reflected")
+              h("div", { className: "w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm" }),
+              h("span", { className: "text-[#4A3B2C] font-medium text-[11px]" }, "Reflected")
             ),
             h("div", { className: "flex items-center gap-1.5" },
-              h("div", { className: "w-2.5 h-2.5 rounded-full bg-white/10" }),
-              h("span", { className: "text-slate-500 text-[11px]" }, "Unwritten")
+              h("div", { className: "w-2.5 h-2.5 rounded-full bg-amber-900/20" }),
+              h("span", { className: "text-[#8C7D70] text-[11px]" }, "Unwritten")
             )
           ),
-          h("div", { className: "flex items-center gap-1.5 bg-white/5 px-3 py-1 rounded-full border border-white/10 text-slate-300 text-[11px]" },
+          h("div", { className: "flex items-center gap-1.5 bg-amber-50 px-3 py-1 rounded-full border border-amber-200 text-[#4A3B2C] text-[11px] shadow-sm" },
             "🌿 ",
-            h("strong", { className: "text-amber-200 font-mono" }, monthStats.count),
+            h("strong", { className: "text-amber-900 font-mono font-bold" }, monthStats.count),
             " of " + monthStats.total + " days (" + monthStats.percentage + "%)"
           )
         )
@@ -676,7 +676,7 @@ function CalendarView({ selectedDate, onSelectDate, activeDatesSet, entriesMap, 
 }
 
 // ---------------------------------------------------------------------------
-// 8. Entry Editor Component (One Paragraph Sanctuary)
+// 8. Entry Editor Component (Light Cream Sanctuary)
 // ---------------------------------------------------------------------------
 function EntryEditor({ dateStr, initialContent, onSave, onDelete, onNavigateDate, todayStr, soundEnabled }) {
   const [content, setContent] = useState(initialContent || "");
@@ -711,10 +711,10 @@ function EntryEditor({ dateStr, initialContent, onSave, onDelete, onNavigateDate
   }, [content]);
 
   const paragraphStatus = useMemo(() => {
-    if (wordCount === 0) return { label: "Empty canvas", color: "text-slate-500" };
-    if (wordCount < 25) return { label: "Beginning reflection...", color: "text-amber-300/80" };
-    if (wordCount <= 120) return { label: "Sweet spot: 1 thoughtful paragraph", color: "text-emerald-400 font-semibold" };
-    return { label: "Deep extended reflection", color: "text-amber-400" };
+    if (wordCount === 0) return { label: "Empty canvas", color: "text-[#8C7D70]" };
+    if (wordCount < 25) return { label: "Beginning reflection...", color: "text-amber-700" };
+    if (wordCount <= 120) return { label: "Sweet spot: 1 thoughtful paragraph", color: "text-emerald-700 font-semibold" };
+    return { label: "Deep extended reflection", color: "text-amber-800 font-semibold" };
   }, [wordCount]);
 
   const handleRollPrompt = () => {
@@ -741,7 +741,7 @@ function EntryEditor({ dateStr, initialContent, onSave, onDelete, onNavigateDate
           particleCount: 50,
           spread: 65,
           origin: { y: 0.75 },
-          colors: ["#F59E0B", "#D97706", "#FEF3C7", "#10B981"],
+          colors: ["#D97706", "#F59E0B", "#FEF3C7", "#10B981"],
         });
       }
 
@@ -774,52 +774,55 @@ function EntryEditor({ dateStr, initialContent, onSave, onDelete, onNavigateDate
         
         h("div", null,
           // Navigation Bar
-          h("div", { className: "flex items-center justify-between pb-4 border-b border-white/5" },
+          h("div", { className: "flex items-center justify-between pb-4 border-b border-amber-900/10" },
             h("div", { className: "flex items-center gap-1.5" },
               h("button", {
                 onClick: () => onNavigateDate(-1),
-                className: "p-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-xs transition-colors"
+                "aria-label": "Previous Day",
+                className: "p-1.5 rounded-full bg-amber-50 hover:bg-amber-100 border border-amber-200 text-[#4A3B2C] text-xs transition-colors shadow-sm"
               }, "← Prev Day"),
               h("button", {
                 onClick: () => onNavigateDate(1),
                 disabled: dateStr >= todayStr,
-                className: "p-1.5 rounded-full bg-white/5 border border-white/10 text-slate-300 text-xs transition-colors " +
-                  (dateStr >= todayStr ? "opacity-30 cursor-not-allowed" : "hover:bg-white/10")
+                "aria-label": "Next Day",
+                className: "p-1.5 rounded-full bg-amber-50 border border-amber-200 text-[#4A3B2C] text-xs transition-colors " +
+                  (dateStr >= todayStr ? "opacity-30 cursor-not-allowed" : "hover:bg-amber-100 shadow-sm")
               }, "Next Day →")
             ),
             h("div", { className: "flex items-center gap-2" },
-              isToday && h("span", { className: "px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/30 text-[9px] uppercase font-mono tracking-widest font-semibold" }, "Today's Space"),
-              h("span", { className: "text-slate-400 text-xs font-mono" }, dateStr)
+              isToday && h("span", { className: "px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 text-[9px] uppercase font-mono tracking-widest font-bold" }, "Today's Space"),
+              h("span", { className: "text-[#7A6B5D] text-xs font-mono font-semibold" }, dateStr)
             )
           ),
 
           // Date Header
           h("div", { className: "mt-4 mb-3" },
-            h("h3", { className: "font-serif text-xl md:text-2xl font-bold text-slate-100 tracking-tight" }, formattedDate),
-            h("p", { className: "text-xs text-slate-400 mt-0.5 font-light italic" },
+            h("h3", { className: "font-serif text-xl md:text-2xl font-bold text-amber-950 tracking-tight" }, formattedDate),
+            h("p", { className: "text-xs text-[#7A6B5D] mt-0.5 font-light italic" },
               "A private sanctuary to write one thoughtful paragraph a day."
             )
           ),
 
           // Daily Prompt Banner
-          h("div", { className: "my-3.5 p-3 rounded-2xl bg-amber-500/[0.07] border border-amber-500/20 flex items-start justify-between gap-3" },
+          h("div", { className: "my-3.5 p-3.5 rounded-2xl bg-gradient-to-r from-amber-50/90 via-rose-50/60 to-orange-50/80 border border-amber-200/90 flex items-start justify-between gap-3 shadow-sm" },
             h("div", null,
-              h("span", { className: "text-[9px] font-mono uppercase tracking-wider text-amber-300/80 font-semibold" },
+              h("span", { className: "text-[9px] font-mono uppercase tracking-wider text-amber-800 font-bold px-2 py-0.5 rounded bg-white/80 border border-amber-200 inline-block" },
                 "✨ Prompt: " + GRATITUDE_PROMPTS[activePromptIdx].category
               ),
-              h("p", { className: "font-serif italic text-xs md:text-sm text-amber-100/90 leading-relaxed mt-0.5" },
+              h("p", { className: "font-serif italic text-xs md:text-sm text-[#4A3B2C] leading-relaxed mt-1" },
                 "\"" + GRATITUDE_PROMPTS[activePromptIdx].prompt + "\""
               )
             ),
             h("button", {
               onClick: handleRollPrompt,
+              "aria-label": "Roll Next Prompt",
               title: "Next Prompt",
-              className: "p-1.5 rounded-lg text-amber-300/70 hover:text-amber-200 hover:bg-amber-400/10 transition-colors text-xs shrink-0"
+              className: "p-1.5 rounded-lg text-amber-800 hover:text-amber-950 hover:bg-amber-100/80 transition-colors text-xs shrink-0"
             }, "🔄")
           ),
 
           // Error Message
-          errorMsg && h("div", { className: "mb-3 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2" },
+          errorMsg && h("div", { className: "mb-3 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2" },
             "⚠️ " + errorMsg
           ),
 
@@ -838,19 +841,19 @@ function EntryEditor({ dateStr, initialContent, onSave, onDelete, onNavigateDate
               placeholder: "What brought peace, light, connection, or quiet joy to your world today? Pen your one paragraph...",
               rows: 7,
               "aria-label": "Daily Gratitude Reflection Text Area",
-              className: "w-full rounded-2xl bg-[#090B10]/90 border border-white/10 focus:border-amber-400/50 focus:ring-2 focus:ring-amber-400/20 p-4 md:p-5 text-slate-100 text-sm md:text-base font-serif placeholder:font-sans placeholder:text-slate-500 placeholder:text-xs leading-relaxed focus:outline-none transition-all resize-none shadow-inner"
+              className: "w-full rounded-2xl bg-[#FCFAF7] border border-amber-900/15 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 p-4 md:p-5 text-[#2D2319] text-sm md:text-base font-serif placeholder:font-sans placeholder:text-[#A89989] placeholder:text-xs leading-relaxed focus:outline-none transition-all resize-none shadow-inner"
             }),
-            h("div", { className: "absolute bottom-3 right-4 hidden sm:block text-[10px] font-mono text-slate-500 pointer-events-none" },
+            h("div", { className: "absolute bottom-3 right-4 hidden sm:block text-[10px] font-mono text-[#8C7D70] pointer-events-none" },
               "Ctrl + Enter to commit"
             )
           )
         ),
 
         // Action Bar Footer
-        h("div", { className: "mt-4 pt-4 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3" },
+        h("div", { className: "mt-4 pt-4 border-t border-amber-900/10 flex flex-col sm:flex-row items-center justify-between gap-3" },
           h("div", { className: "flex items-center gap-2 text-xs" },
-            h("span", { className: "font-mono font-bold text-slate-200" }, wordCount + (wordCount === 1 ? " word" : " words")),
-            h("span", { className: "text-slate-600" }, "•"),
+            h("span", { className: "font-mono font-bold text-[#4A3B2C]" }, wordCount + (wordCount === 1 ? " word" : " words")),
+            h("span", { className: "text-[#A89989]" }, "•"),
             h("span", { className: paragraphStatus.color }, paragraphStatus.label)
           ),
 
@@ -860,19 +863,19 @@ function EntryEditor({ dateStr, initialContent, onSave, onDelete, onNavigateDate
                 onClick: () => setShowConfirmDelete(true),
                 "aria-label": "Delete reflection",
                 title: "Delete reflection",
-                className: "p-2 rounded-full text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors text-xs"
+                className: "p-2 rounded-full text-[#8C7D70] hover:text-rose-600 hover:bg-rose-50 transition-colors text-xs"
               }, "🗑️")
             ),
 
-            showConfirmDelete && h("div", { className: "flex items-center gap-1 bg-rose-500/10 border border-rose-500/30 p-1 rounded-full text-xs" },
-              h("span", { className: "text-rose-300 text-[10px] px-1" }, "Confirm delete?"),
+            showConfirmDelete && h("div", { className: "flex items-center gap-1 bg-rose-50 border border-rose-200 p-1 rounded-full text-xs" },
+              h("span", { className: "text-rose-800 text-[10px] px-1 font-medium" }, "Confirm delete?"),
               h("button", {
                 onClick: handleDelete,
-                className: "px-2 py-0.5 bg-rose-600 hover:bg-rose-500 text-white rounded-full text-[10px]"
+                className: "px-2 py-0.5 bg-rose-600 hover:bg-rose-700 text-white rounded-full text-[10px] font-medium"
               }, "Yes"),
               h("button", {
                 onClick: () => setShowConfirmDelete(false),
-                className: "px-1.5 py-0.5 text-slate-400 hover:text-white text-[10px]"
+                className: "px-1.5 py-0.5 text-[#7A6B5D] hover:text-black text-[10px]"
               }, "Cancel")
             ),
 
@@ -880,14 +883,13 @@ function EntryEditor({ dateStr, initialContent, onSave, onDelete, onNavigateDate
               onClick: handleSave,
               disabled: isSaving,
               "aria-label": "Commit gratitude reflection",
-              className: "btn-island bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-black shadow-xl shadow-amber-500/20 active:scale-[0.98]"
+              className: "btn-island bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-600 hover:to-amber-500 text-white font-semibold shadow-lg shadow-amber-500/25 active:scale-[0.98]"
             },
               h("span", null, isSaving ? "Preserving..." : isSaved ? "Preserved in Gold ✨" : "Commit Gratitude"),
-              h("div", { className: "w-6 h-6 rounded-full bg-black/15 flex items-center justify-center font-bold text-black text-xs" }, "✓")
+              h("div", { className: "w-6 h-6 rounded-full bg-white/25 flex items-center justify-center font-bold text-white text-xs" }, "✓")
             )
           )
         )
-
 
       )
     )
@@ -895,7 +897,7 @@ function EntryEditor({ dateStr, initialContent, onSave, onDelete, onNavigateDate
 }
 
 // ---------------------------------------------------------------------------
-// 9. Timeline View Component (Chronicle Feed)
+// 9. Timeline View Component (Light Chronicle Feed)
 // ---------------------------------------------------------------------------
 function TimelineView({ entries, onSelectEntryDate }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -943,14 +945,14 @@ function TimelineView({ entries, onSelectEntryDate }) {
     
     // Inspirational Quote Banner
     h("div", { className: "double-bezel-outer" },
-      h("div", { className: "double-bezel-inner p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4" },
+      h("div", { className: "double-bezel-inner p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4 bg-gradient-to-r from-amber-50/80 via-rose-50/50 to-orange-50/60" },
         h("div", { className: "flex items-start gap-3" },
-          h("div", { className: "p-2.5 rounded-2xl bg-amber-400/15 text-amber-300 text-xl shrink-0" }, "❝"),
+          h("div", { className: "p-2.5 rounded-2xl bg-amber-200/70 text-amber-900 text-xl shrink-0 shadow-sm" }, "❝"),
           h("div", null,
-            h("p", { className: "font-serif italic text-base md:text-lg text-amber-100 leading-relaxed" },
+            h("p", { className: "font-serif italic text-base md:text-lg text-amber-950 leading-relaxed font-medium" },
               "\"" + quote.quote + "\""
             ),
-            h("p", { className: "text-xs font-mono tracking-widest text-amber-400/80 uppercase mt-1.5" },
+            h("p", { className: "text-xs font-mono tracking-widest text-amber-800 uppercase mt-1.5 font-semibold" },
               "— " + quote.author
             )
           )
@@ -958,7 +960,8 @@ function TimelineView({ entries, onSelectEntryDate }) {
         h("button", {
           onClick: handleExport,
           disabled: !entries || entries.length === 0,
-          className: "shrink-0 px-4 py-2 rounded-full bg-white/5 hover:bg-amber-400/20 border border-white/10 hover:border-amber-400/30 text-xs font-medium text-slate-200 hover:text-amber-200 transition-all shadow-lg"
+          "aria-label": "Export Archive (.txt)",
+          className: "shrink-0 px-4 py-2 rounded-full bg-white hover:bg-amber-100 border border-amber-200 text-xs font-semibold text-amber-900 transition-all shadow-sm hover:shadow"
         }, "📥 Export Archive (.txt)")
       )
     ),
@@ -971,7 +974,8 @@ function TimelineView({ entries, onSelectEntryDate }) {
           value: searchTerm,
           onChange: (e) => setSearchTerm(e.target.value),
           placeholder: "🔍 Search reflections or dates...",
-          className: "w-full bg-[#11141D] border border-white/10 focus:border-amber-400/50 rounded-full px-4 py-2 text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none transition-all shadow-inner"
+          "aria-label": "Search reflections",
+          className: "w-full bg-white border border-amber-900/15 focus:border-amber-500 rounded-full px-4 py-2 text-xs text-[#2D2319] placeholder:text-[#9C8D7F] focus:outline-none transition-all shadow-sm"
         })
       ),
 
@@ -979,14 +983,14 @@ function TimelineView({ entries, onSelectEntryDate }) {
         h("button", {
           onClick: () => setSelectedMonth("ALL"),
           className: "px-3 py-1 rounded-full text-xs font-mono shrink-0 " +
-            (selectedMonth === "ALL" ? "bg-amber-400/20 text-amber-200 border border-amber-400/40 font-bold" : "bg-[#11141D] text-slate-400 border border-white/10")
+            (selectedMonth === "ALL" ? "bg-amber-200 text-amber-950 border border-amber-400 font-bold shadow-sm" : "bg-white text-[#7A6B5D] border border-amber-900/10")
         }, "All Time"),
         availableMonths.map((m) =>
           h("button", {
             key: m,
             onClick: () => setSelectedMonth(m),
             className: "px-3 py-1 rounded-full text-xs font-mono shrink-0 " +
-              (selectedMonth === m ? "bg-amber-400/20 text-amber-200 border border-amber-400/40 font-bold" : "bg-[#11141D] text-slate-400 border border-white/10")
+              (selectedMonth === m ? "bg-amber-200 text-amber-950 border border-amber-400 font-bold shadow-sm" : "bg-white text-[#7A6B5D] border border-amber-900/10")
           }, m)
         )
       )
@@ -994,10 +998,10 @@ function TimelineView({ entries, onSelectEntryDate }) {
 
     // List of Cards
     filtered.length === 0 ? (
-      h("div", { className: "rounded-[2rem] p-12 text-center bg-[#0E1118]/80 border border-white/5" },
+      h("div", { className: "rounded-[2rem] p-12 text-center bg-white/80 border border-amber-900/10 shadow-sm" },
         h("div", { className: "text-3xl mb-2" }, "🪶"),
-        h("h3", { className: "font-serif text-lg text-slate-200" }, "No reflections found"),
-        h("p", { className: "text-xs text-slate-500 mt-1" },
+        h("h3", { className: "font-serif text-lg text-amber-950 font-bold" }, "No reflections found"),
+        h("p", { className: "text-xs text-[#7A6B5D] mt-1" },
           searchTerm ? "Try searching for another keyword or month." : "Return to the calendar sanctuary to begin journaling."
         )
       )
@@ -1013,40 +1017,41 @@ function TimelineView({ entries, onSelectEntryDate }) {
 
           return h("div", {
             key: entry.id,
-            className: "group relative rounded-[1.75rem] p-1 bg-gradient-to-b from-white/10 via-white/5 to-transparent border border-white/10 hover:border-amber-400/40 transition-all duration-300 shadow-xl"
+            className: "group relative rounded-[1.75rem] p-1 bg-white border border-amber-900/10 hover:border-amber-400 transition-all duration-300 shadow-md hover:shadow-xl"
           },
-            h("div", { className: "rounded-[calc(1.75rem-0.25rem)] bg-[#0E1118]/95 p-5 md:p-6 flex flex-col justify-between h-full group-hover:bg-[#121622] transition-colors" },
+            h("div", { className: "rounded-[calc(1.75rem-0.25rem)] bg-[#FCFAF7] p-5 md:p-6 flex flex-col justify-between h-full group-hover:bg-amber-50/30 transition-colors" },
               
               h("div", null,
-                h("div", { className: "flex items-center justify-between pb-3 border-b border-white/5" },
+                h("div", { className: "flex items-center justify-between pb-3 border-b border-amber-900/10" },
                   h("div", { className: "flex items-center gap-3" },
-                    h("div", { className: "w-10 h-10 rounded-2xl bg-amber-400/15 border border-amber-400/30 flex flex-col items-center justify-center text-amber-200" },
+                    h("div", { className: "w-10 h-10 rounded-2xl bg-amber-100 border border-amber-300 flex flex-col items-center justify-center text-amber-950 shadow-sm" },
                       h("span", { className: "text-[9px] font-mono uppercase font-bold leading-none" }, monthName),
                       h("span", { className: "text-sm font-mono font-bold leading-none mt-0.5" }, dayNum)
                     ),
                     h("div", null,
-                      h("h4", { className: "text-xs font-semibold text-slate-200" }, weekday),
-                      h("span", { className: "text-[10px] font-mono text-slate-500" }, yearNum)
+                      h("h4", { className: "text-xs font-semibold text-[#2D2319]" }, weekday),
+                      h("span", { className: "text-[10px] font-mono text-[#8C7D70]" }, yearNum)
                     )
                   ),
                   h("button", {
                     onClick: () => onSelectEntryDate(entry.date),
-                    className: "p-2 rounded-full bg-white/5 hover:bg-amber-400/20 text-slate-300 text-xs transition-colors"
+                    "aria-label": "Edit reflection for " + entry.date,
+                    className: "p-2 rounded-full bg-white hover:bg-amber-100 text-[#4A3B2C] text-xs transition-colors shadow-sm"
                   }, "✏️")
                 ),
 
                 h("div", { className: "my-4" },
-                  h("p", { className: "font-serif text-sm md:text-base text-slate-300 leading-relaxed italic" },
+                  h("p", { className: "font-serif text-sm md:text-base text-[#2D2319] leading-relaxed italic" },
                     "\"" + entry.content + "\""
                   )
                 )
               ),
 
-              h("div", { className: "pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-500 font-mono" },
+              h("div", { className: "pt-3 border-t border-amber-900/10 flex items-center justify-between text-[11px] text-[#7A6B5D] font-mono" },
                 h("span", null, words + (words === 1 ? " word" : " words")),
                 h("button", {
                   onClick: () => onSelectEntryDate(entry.date),
-                  className: "text-amber-300/90 hover:text-amber-200 text-xs font-sans group-hover:translate-x-0.5 transition-transform"
+                  className: "text-amber-800 hover:text-amber-950 font-bold text-xs font-sans group-hover:translate-x-0.5 transition-transform"
                 }, "Open in Sanctuary →")
               )
 
@@ -1059,23 +1064,24 @@ function TimelineView({ entries, onSelectEntryDate }) {
 }
 
 // ---------------------------------------------------------------------------
-// 10. Prompt Modal & Stats Modal
+// 10. Prompt Modal & Stats Modal (Light Cream Dreamy)
 // ---------------------------------------------------------------------------
 function PromptModal({ isOpen, onClose, onSelectPrompt }) {
   if (!isOpen) return null;
 
-  return h("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl animate-in fade-in" },
-    h("div", { className: "relative w-full max-w-2xl rounded-[2rem] p-1.5 bg-gradient-to-b from-white/15 via-white/5 to-transparent border border-white/15 shadow-2xl" },
-      h("div", { className: "rounded-[calc(2rem-0.375rem)] bg-[#0C0F16] p-6 md:p-8 max-h-[85vh] overflow-y-auto" },
+  return h("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/40 backdrop-blur-md animate-in fade-in" },
+    h("div", { className: "relative w-full max-w-2xl rounded-[2rem] p-1.5 bg-white border border-amber-200 shadow-2xl" },
+      h("div", { className: "rounded-[calc(2rem-0.375rem)] bg-[#FCFAF7] p-6 md:p-8 max-h-[85vh] overflow-y-auto" },
         
-        h("div", { className: "flex items-center justify-between pb-4 border-b border-white/10" },
+        h("div", { className: "flex items-center justify-between pb-4 border-b border-amber-900/10" },
           h("div", null,
-            h("h3", { className: "font-serif text-xl font-bold text-slate-100" }, "✨ Mindful Gratitude Sparks"),
-            h("p", { className: "text-xs text-slate-400 mt-0.5" }, "Curated prompts to awaken deeper observation and appreciation.")
+            h("h3", { className: "font-serif text-xl font-bold text-amber-950" }, "✨ Mindful Gratitude Sparks"),
+            h("p", { className: "text-xs text-[#7A6B5D] mt-0.5" }, "Curated prompts to awaken deeper observation and appreciation.")
           ),
           h("button", {
             onClick: onClose,
-            className: "p-2 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-slate-200 text-sm"
+            "aria-label": "Close Modal",
+            className: "p-2 rounded-full bg-white hover:bg-amber-100 text-[#7A6B5D] hover:text-black text-sm shadow-sm"
           }, "✕")
         ),
 
@@ -1083,19 +1089,19 @@ function PromptModal({ isOpen, onClose, onSelectPrompt }) {
           GRATITUDE_PROMPTS.map((item, idx) =>
             h("div", {
               key: idx,
-              className: "rounded-2xl p-4 bg-[#141824]/80 border border-white/5 hover:border-amber-400/30 flex flex-col justify-between"
+              className: "rounded-2xl p-4 bg-white border border-amber-900/10 hover:border-amber-400 flex flex-col justify-between shadow-sm"
             },
               h("div", null,
-                h("span", { className: "text-[9px] font-mono uppercase tracking-wider text-amber-300/80 font-semibold px-2 py-0.5 rounded bg-amber-400/10 border border-amber-400/20" }, item.category),
-                h("p", { className: "font-serif italic text-xs md:text-sm text-slate-200 mt-2.5 leading-relaxed" }, "\"" + item.prompt + "\"")
+                h("span", { className: "text-[9px] font-mono uppercase tracking-wider text-amber-900 font-bold px-2 py-0.5 rounded bg-amber-100 border border-amber-300 inline-block" }, item.category),
+                h("p", { className: "font-serif italic text-xs md:text-sm text-[#2D2319] mt-2.5 leading-relaxed font-medium" }, "\"" + item.prompt + "\"")
               ),
-              h("div", { className: "mt-4 pt-3 border-t border-white/5 flex justify-end" },
+              h("div", { className: "mt-4 pt-3 border-t border-amber-900/10 flex justify-end" },
                 h("button", {
                   onClick: () => {
                     onSelectPrompt(item.prompt);
                     onClose();
                   },
-                  className: "px-3 py-1 rounded-full bg-amber-400/20 hover:bg-amber-400/30 border border-amber-400/40 text-amber-200 text-xs font-medium transition-colors"
+                  className: "px-3 py-1 rounded-full bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold shadow-sm transition-colors"
                 }, "+ Use Prompt")
               )
             )
@@ -1110,71 +1116,72 @@ function PromptModal({ isOpen, onClose, onSelectPrompt }) {
 function StatsModal({ isOpen, onClose, stats }) {
   if (!isOpen) return null;
 
-  return h("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl animate-in fade-in" },
-    h("div", { className: "relative w-full max-w-lg rounded-[2rem] p-1.5 bg-gradient-to-b from-amber-500/20 via-white/5 to-transparent border border-white/15 shadow-2xl" },
-      h("div", { className: "rounded-[calc(2rem-0.375rem)] bg-[#0C0F16] p-6 md:p-8" },
+  return h("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/40 backdrop-blur-md animate-in fade-in" },
+    h("div", { className: "relative w-full max-w-lg rounded-[2rem] p-1.5 bg-white border border-amber-200 shadow-2xl" },
+      h("div", { className: "rounded-[calc(2rem-0.375rem)] bg-[#FCFAF7] p-6 md:p-8" },
         
-        h("div", { className: "flex items-center justify-between pb-4 border-b border-white/10" },
+        h("div", { className: "flex items-center justify-between pb-4 border-b border-amber-900/10" },
           h("div", null,
-            h("h3", { className: "font-serif text-xl font-bold text-slate-100" }, "🏆 Gratitude Sanctuary Insights"),
-            h("p", { className: "text-xs text-slate-400 mt-0.5" }, "Your daily journey of enduring mindfulness.")
+            h("h3", { className: "font-serif text-xl font-bold text-amber-950" }, "🏆 Gratitude Sanctuary Insights"),
+            h("p", { className: "text-xs text-[#7A6B5D] mt-0.5" }, "Your daily journey of enduring mindfulness.")
           ),
           h("button", {
             onClick: onClose,
-            className: "p-2 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-slate-200 text-sm"
+            "aria-label": "Close Modal",
+            className: "p-2 rounded-full bg-white hover:bg-amber-100 text-[#7A6B5D] hover:text-black text-sm shadow-sm"
           }, "✕")
         ),
 
         h("div", { className: "grid grid-cols-2 gap-3 my-5" },
           
-          h("div", { className: "rounded-2xl bg-gradient-to-b from-amber-500/15 to-transparent border border-amber-500/30 p-4" },
+          h("div", { className: "rounded-2xl bg-amber-50 border border-amber-300 p-4 shadow-sm" },
             h("div", { className: "flex items-center justify-between" },
-              h("span", { className: "text-[10px] font-mono uppercase tracking-wider text-amber-300" }, "Current Streak"),
+              h("span", { className: "text-[10px] font-mono uppercase tracking-wider text-amber-900 font-bold" }, "Current Streak"),
               h("span", null, "🔥")
             ),
             h("div", { className: "mt-2" },
-              h("span", { className: "text-3xl font-mono font-bold text-amber-200" }, stats?.current_streak || 0),
-              h("span", { className: "text-xs text-amber-400/80 ml-1.5" }, "days")
+              h("span", { className: "text-3xl font-mono font-bold text-amber-950" }, stats?.current_streak || 0),
+              h("span", { className: "text-xs text-amber-800 ml-1.5 font-semibold" }, "days")
             )
           ),
 
-          h("div", { className: "rounded-2xl bg-white/[0.03] border border-white/10 p-4" },
+          h("div", { className: "rounded-2xl bg-white border border-amber-900/10 p-4 shadow-sm" },
             h("div", { className: "flex items-center justify-between" },
-              h("span", { className: "text-[10px] font-mono uppercase tracking-wider text-slate-400" }, "All-Time Record"),
+              h("span", { className: "text-[10px] font-mono uppercase tracking-wider text-[#7A6B5D] font-bold" }, "All-Time Record"),
               h("span", null, "🌟")
             ),
             h("div", { className: "mt-2" },
-              h("span", { className: "text-3xl font-mono font-bold text-slate-100" }, stats?.longest_streak || 0),
-              h("span", { className: "text-xs text-slate-400 ml-1.5" }, "days")
+              h("span", { className: "text-3xl font-mono font-bold text-[#2D2319]" }, stats?.longest_streak || 0),
+              h("span", { className: "text-xs text-[#8C7D70] ml-1.5" }, "days")
             )
           ),
 
-          h("div", { className: "rounded-2xl bg-white/[0.03] border border-white/10 p-4" },
+          h("div", { className: "rounded-2xl bg-white border border-amber-900/10 p-4 shadow-sm" },
             h("div", { className: "flex items-center justify-between" },
-              h("span", { className: "text-[10px] font-mono uppercase tracking-wider text-slate-400" }, "Total Chronicled"),
+              h("span", { className: "text-[10px] font-mono uppercase tracking-wider text-[#7A6B5D] font-bold" }, "Total Chronicled"),
               h("span", null, "📖")
             ),
             h("div", { className: "mt-2" },
-              h("span", { className: "text-3xl font-mono font-bold text-slate-100" }, stats?.total_entries || 0),
-              h("span", { className: "text-xs text-slate-400 ml-1.5" }, "reflections")
+              h("span", { className: "text-3xl font-mono font-bold text-[#2D2319]" }, stats?.total_entries || 0),
+              h("span", { className: "text-xs text-[#8C7D70] ml-1.5" }, "reflections")
             )
           ),
 
-          h("div", { className: "rounded-2xl bg-white/[0.03] border border-white/10 p-4" },
+          h("div", { className: "rounded-2xl bg-white border border-amber-900/10 p-4 shadow-sm" },
             h("div", { className: "flex items-center justify-between" },
-              h("span", { className: "text-[10px] font-mono uppercase tracking-wider text-slate-400" }, "This Month"),
+              h("span", { className: "text-[10px] font-mono uppercase tracking-wider text-[#7A6B5D] font-bold" }, "This Month"),
               h("span", null, "🌿")
             ),
             h("div", { className: "mt-2" },
-              h("span", { className: "text-3xl font-mono font-bold text-slate-100" }, stats?.this_month_count || 0),
-              h("span", { className: "text-xs text-slate-400 ml-1.5" }, "days")
+              h("span", { className: "text-3xl font-mono font-bold text-[#2D2319]" }, stats?.this_month_count || 0),
+              h("span", { className: "text-xs text-[#8C7D70] ml-1.5" }, "days")
             )
           )
 
         ),
 
-        h("div", { className: "p-4 rounded-2xl bg-amber-400/[0.07] border border-amber-400/20 text-center" },
-          h("p", { className: "font-serif italic text-xs text-amber-200/90 leading-relaxed" },
+        h("div", { className: "p-4 rounded-2xl bg-gradient-to-r from-amber-50 to-rose-50 border border-amber-200 text-center" },
+          h("p", { className: "font-serif italic text-xs text-amber-950 font-medium leading-relaxed" },
             "\"Noticing goodness on ordinary days is what makes a life extraordinary.\""
           )
         )
@@ -1185,7 +1192,7 @@ function StatsModal({ isOpen, onClose, stats }) {
 }
 
 // ---------------------------------------------------------------------------
-// 11. Login and Register Authentication Screens
+// 11. Login and Register Authentication Screens (Light Cream)
 // ---------------------------------------------------------------------------
 function Login({ onSwitchToRegister }) {
   const { login } = useAuth();
@@ -1212,51 +1219,51 @@ function Login({ onSwitchToRegister }) {
     setPassword("ComplexPassword123!");
   };
 
-  return h("div", { className: "min-h-screen flex items-center justify-center p-4 bg-[#07090E] relative overflow-hidden" },
+  return h("div", { className: "min-h-screen flex items-center justify-center p-4 bg-[#FAF7F2] relative overflow-hidden" },
     
-    // Glow orbs
-    h("div", { className: "absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" }),
-    h("div", { className: "absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" }),
+    // Dreamy Glow Orbs
+    h("div", { className: "absolute top-1/4 left-1/4 w-96 h-96 bg-amber-200/40 rounded-full blur-3xl pointer-events-none" }),
+    h("div", { className: "absolute bottom-1/4 right-1/4 w-96 h-96 bg-rose-200/30 rounded-full blur-3xl pointer-events-none" }),
 
     h("div", { className: "relative w-full max-w-md double-bezel-outer z-10" },
       h("div", { className: "double-bezel-inner p-8 md:p-10" },
         
         // Brand Title
         h("div", { className: "text-center mb-7" },
-          h("div", { className: "w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-600 to-amber-300 flex items-center justify-center mx-auto shadow-lg shadow-amber-500/25 mb-4 text-black text-xl font-bold font-serif" }, "✦"),
-          h("h1", { className: "font-serif text-3xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400" }, "SOLIS"),
-          h("p", { className: "text-[10px] uppercase font-mono tracking-widest text-amber-400/80 mt-1" }, "Daily Gratitude Journal"),
-          h("p", { className: "text-xs text-slate-400 mt-2 font-light" }, "Sign in to write and explore your daily reflections.")
+          h("div", { className: "w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center mx-auto shadow-md shadow-amber-500/25 mb-4 text-white text-xl font-bold font-serif" }, "✦"),
+          h("h1", { className: "font-serif text-3xl font-bold tracking-tight text-amber-950" }, "SOLIS"),
+          h("p", { className: "text-[10px] uppercase font-mono tracking-widest text-amber-800 font-bold mt-1" }, "Daily Gratitude Journal"),
+          h("p", { className: "text-xs text-[#7A6B5D] mt-2 font-light" }, "Sign in to write and explore your daily reflections.")
         ),
 
         // Error message
-        error && h("div", { className: "mb-5 p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2" },
+        error && h("div", { className: "mb-5 p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2 font-medium" },
           "⚠️ " + error
         ),
 
         // Form
         h("form", { onSubmit: handleSubmit, className: "space-y-4" },
           h("div", { className: "space-y-1.5" },
-            h("label", { className: "text-[11px] font-mono uppercase tracking-wider text-slate-400" }, "Username"),
+            h("label", { className: "text-[11px] font-mono uppercase tracking-wider text-[#7A6B5D] font-bold" }, "Username"),
             h("input", {
               type: "text",
               required: true,
               value: username,
               onChange: (e) => setUsername(e.target.value),
               placeholder: "e.g. alice",
-              className: "w-full bg-[#141824] border border-white/10 focus:border-amber-400/60 focus:ring-2 focus:ring-amber-400/20 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none transition-all"
+              className: "w-full bg-[#FAF7F2] border border-amber-900/15 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 rounded-xl px-4 py-2.5 text-sm text-[#2D2319] placeholder:text-[#A89989] focus:outline-none transition-all"
             })
           ),
 
           h("div", { className: "space-y-1.5" },
-            h("label", { className: "text-[11px] font-mono uppercase tracking-wider text-slate-400" }, "Password"),
+            h("label", { className: "text-[11px] font-mono uppercase tracking-wider text-[#7A6B5D] font-bold" }, "Password"),
             h("input", {
               type: "password",
               required: true,
               value: password,
               onChange: (e) => setPassword(e.target.value),
               placeholder: "••••••••••••",
-              className: "w-full bg-[#141824] border border-white/10 focus:border-amber-400/60 focus:ring-2 focus:ring-amber-400/20 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none transition-all"
+              className: "w-full bg-[#FAF7F2] border border-amber-900/15 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 rounded-xl px-4 py-2.5 text-sm text-[#2D2319] placeholder:text-[#A89989] focus:outline-none transition-all"
             })
           ),
 
@@ -1264,25 +1271,25 @@ function Login({ onSwitchToRegister }) {
             h("button", {
               type: "submit",
               disabled: loading,
-              className: "w-full flex items-center justify-between pl-6 pr-3 py-3 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-black font-semibold text-xs tracking-wider uppercase shadow-xl shadow-amber-500/20 active:scale-[0.98] transition-all"
+              className: "w-full flex items-center justify-between pl-6 pr-3 py-3 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-600 hover:to-amber-500 text-white font-semibold text-xs tracking-wider uppercase shadow-lg shadow-amber-500/25 active:scale-[0.98] transition-all"
             },
               h("span", null, loading ? "Entering Sanctuary..." : "Sign In to Journal"),
-              h("span", { className: "w-6 h-6 rounded-full bg-black/15 flex items-center justify-center font-bold" }, "→")
+              h("span", { className: "w-6 h-6 rounded-full bg-white/25 flex items-center justify-center font-bold text-white" }, "→")
             )
           )
         ),
 
         // Quick Demo & Switch
-        h("div", { className: "mt-6 pt-5 border-t border-white/5 flex items-center justify-between text-xs" },
+        h("div", { className: "mt-6 pt-5 border-t border-amber-900/10 flex items-center justify-between text-xs" },
           h("button", {
             type: "button",
             onClick: handleFillDemo,
-            className: "text-amber-400/80 hover:text-amber-300 transition-colors"
+            className: "text-amber-800 hover:text-amber-950 font-semibold transition-colors"
           }, "✨ Demo User"),
           h("button", {
             type: "button",
             onClick: onSwitchToRegister,
-            className: "text-slate-400 hover:text-slate-200 transition-colors"
+            className: "text-[#7A6B5D] hover:text-[#2D2319] transition-colors"
           }, "Create Account →")
         )
 
@@ -1322,66 +1329,66 @@ function Register({ onSwitchToLogin }) {
     if (!res.success) setError(res.error);
   };
 
-  return h("div", { className: "min-h-screen flex items-center justify-center p-4 bg-[#07090E] relative overflow-hidden" },
+  return h("div", { className: "min-h-screen flex items-center justify-center p-4 bg-[#FAF7F2] relative overflow-hidden" },
     h("div", { className: "relative w-full max-w-md double-bezel-outer z-10" },
       h("div", { className: "double-bezel-inner p-8 md:p-10" },
         
         h("div", { className: "text-center mb-6" },
-          h("div", { className: "w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-600 to-amber-300 flex items-center justify-center mx-auto shadow-lg shadow-amber-500/25 mb-4 text-black text-xl font-bold font-serif" }, "✦"),
-          h("h1", { className: "font-serif text-3xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400" }, "Begin Journey"),
-          h("p", { className: "text-[10px] uppercase font-mono tracking-widest text-amber-400/80 mt-1" }, "Create Your Private Sanctuary"),
-          h("p", { className: "text-xs text-slate-400 mt-2 font-light" }, "One paragraph a day to cultivate enduring joy.")
+          h("div", { className: "w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center mx-auto shadow-md shadow-amber-500/25 mb-4 text-white text-xl font-bold font-serif" }, "✦"),
+          h("h1", { className: "font-serif text-3xl font-bold tracking-tight text-amber-950" }, "Begin Journey"),
+          h("p", { className: "text-[10px] uppercase font-mono tracking-widest text-amber-800 font-bold mt-1" }, "Create Your Private Sanctuary"),
+          h("p", { className: "text-xs text-[#7A6B5D] mt-2 font-light" }, "One paragraph a day to cultivate enduring joy.")
         ),
 
-        error && h("div", { className: "mb-5 p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2" },
+        error && h("div", { className: "mb-5 p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2 font-medium" },
           "⚠️ " + error
         ),
 
         h("form", { onSubmit: handleSubmit, className: "space-y-3.5" },
           h("div", { className: "space-y-1" },
-            h("label", { className: "text-[10px] font-mono uppercase tracking-wider text-slate-400" }, "Username *"),
+            h("label", { className: "text-[10px] font-mono uppercase tracking-wider text-[#7A6B5D] font-bold" }, "Username *"),
             h("input", {
               type: "text",
               required: true,
               value: username,
               onChange: (e) => setUsername(e.target.value),
               placeholder: "Choose a username",
-              className: "w-full bg-[#141824] border border-white/10 focus:border-amber-400/60 focus:ring-2 focus:ring-amber-400/20 rounded-xl px-4 py-2 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none transition-all"
+              className: "w-full bg-[#FAF7F2] border border-amber-900/15 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 rounded-xl px-4 py-2 text-sm text-[#2D2319] placeholder:text-[#A89989] focus:outline-none transition-all"
             })
           ),
 
           h("div", { className: "space-y-1" },
-            h("label", { className: "text-[10px] font-mono uppercase tracking-wider text-slate-400" }, "Email Address (Optional)"),
+            h("label", { className: "text-[10px] font-mono uppercase tracking-wider text-[#7A6B5D] font-bold" }, "Email Address (Optional)"),
             h("input", {
               type: "email",
               value: email,
               onChange: (e) => setEmail(e.target.value),
               placeholder: "your.email@domain.com",
-              className: "w-full bg-[#141824] border border-white/10 focus:border-amber-400/60 focus:ring-2 focus:ring-amber-400/20 rounded-xl px-4 py-2 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none transition-all"
+              className: "w-full bg-[#FAF7F2] border border-amber-900/15 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 rounded-xl px-4 py-2 text-sm text-[#2D2319] placeholder:text-[#A89989] focus:outline-none transition-all"
             })
           ),
 
           h("div", { className: "space-y-1" },
-            h("label", { className: "text-[10px] font-mono uppercase tracking-wider text-slate-400" }, "Password *"),
+            h("label", { className: "text-[10px] font-mono uppercase tracking-wider text-[#7A6B5D] font-bold" }, "Password *"),
             h("input", {
               type: "password",
               required: true,
               value: password,
               onChange: (e) => setPassword(e.target.value),
               placeholder: "Minimum 8 characters",
-              className: "w-full bg-[#141824] border border-white/10 focus:border-amber-400/60 focus:ring-2 focus:ring-amber-400/20 rounded-xl px-4 py-2 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none transition-all"
+              className: "w-full bg-[#FAF7F2] border border-amber-900/15 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 rounded-xl px-4 py-2 text-sm text-[#2D2319] placeholder:text-[#A89989] focus:outline-none transition-all"
             })
           ),
 
           h("div", { className: "space-y-1" },
-            h("label", { className: "text-[10px] font-mono uppercase tracking-wider text-slate-400" }, "Confirm Password *"),
+            h("label", { className: "text-[10px] font-mono uppercase tracking-wider text-[#7A6B5D] font-bold" }, "Confirm Password *"),
             h("input", {
               type: "password",
               required: true,
               value: passwordConfirm,
               onChange: (e) => setPasswordConfirm(e.target.value),
               placeholder: "Re-enter password",
-              className: "w-full bg-[#141824] border border-white/10 focus:border-amber-400/60 focus:ring-2 focus:ring-amber-400/20 rounded-xl px-4 py-2 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none transition-all"
+              className: "w-full bg-[#FAF7F2] border border-amber-900/15 focus:border-amber-500 focus:ring-2 focus:ring-amber-400/30 rounded-xl px-4 py-2 text-sm text-[#2D2319] placeholder:text-[#A89989] focus:outline-none transition-all"
             })
           ),
 
@@ -1389,20 +1396,20 @@ function Register({ onSwitchToLogin }) {
             h("button", {
               type: "submit",
               disabled: loading,
-              className: "w-full flex items-center justify-between pl-6 pr-3 py-3 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-black font-semibold text-xs tracking-wider uppercase shadow-xl shadow-amber-500/20 active:scale-[0.98] transition-all"
+              className: "w-full flex items-center justify-between pl-6 pr-3 py-3 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-600 hover:to-amber-500 text-white font-semibold text-xs tracking-wider uppercase shadow-lg shadow-amber-500/25 active:scale-[0.98] transition-all"
             },
               h("span", null, loading ? "Creating Account..." : "Initialize Sanctuary"),
-              h("span", { className: "w-6 h-6 rounded-full bg-black/15 flex items-center justify-center font-bold" }, "→")
+              h("span", { className: "w-6 h-6 rounded-full bg-white/25 flex items-center justify-center font-bold text-white" }, "→")
             )
           )
         ),
 
-        h("div", { className: "mt-5 pt-4 border-t border-white/5 text-center text-xs" },
-          h("span", { className: "text-slate-500" }, "Already have an account? "),
+        h("div", { className: "mt-5 pt-4 border-t border-amber-900/10 text-center text-xs" },
+          h("span", { className: "#7A6B5D" }, "Already have an account? "),
           h("button", {
             type: "button",
             onClick: onSwitchToLogin,
-            className: "text-amber-300 hover:text-amber-200 font-medium ml-1 transition-colors"
+            className: "text-amber-800 hover:text-amber-950 font-bold ml-1 transition-colors"
           }, "Sign In →")
         )
 
@@ -1412,7 +1419,7 @@ function Register({ onSwitchToLogin }) {
 }
 
 // ---------------------------------------------------------------------------
-// 12. Main Dashboard Component
+// 12. Main Dashboard Component (Light Dreamy Sanctuary)
 // ---------------------------------------------------------------------------
 function Dashboard() {
   const { user } = useAuth();
@@ -1549,10 +1556,11 @@ function Dashboard() {
     setActiveTab("calendar");
   };
 
-  return h("div", { className: "min-h-screen bg-[#07090E] text-[#e2e8f0] relative" },
+  return h("div", { className: "min-h-screen bg-[#FAF7F2] text-[#2D2319] relative" },
     
-    // Background glow
-    h("div", { className: "fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-900/10 via-transparent to-transparent pointer-events-none z-0" }),
+    // Background dreamy ambient glows
+    h("div", { className: "fixed top-0 left-1/4 w-[600px] h-[600px] bg-gradient-to-tr from-amber-200/30 via-rose-200/20 to-orange-100/30 rounded-full blur-3xl pointer-events-none z-0" }),
+    h("div", { className: "fixed bottom-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-amber-100/40 via-yellow-100/30 to-rose-100/20 rounded-full blur-3xl pointer-events-none z-0" }),
 
     // Floating Navbar
     h(Navbar, {
@@ -1568,11 +1576,11 @@ function Dashboard() {
     // Main Container
     h("main", { className: "relative z-10 pt-28 pb-20 px-4 md:px-8 max-w-6xl mx-auto" },
       
-      error && h("div", { className: "mb-6 p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-between text-rose-300 text-xs" },
+      error && h("div", { className: "mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-200 flex items-center justify-between text-rose-800 text-xs shadow-sm" },
         h("span", null, "⚠️ " + error),
         h("button", {
           onClick: () => loadSanctuaryData(false),
-          className: "text-rose-200 underline font-mono"
+          className: "text-rose-900 font-bold underline font-mono"
         }, "Retry")
       ),
 
@@ -1582,17 +1590,17 @@ function Dashboard() {
           // Header Greetings
           h("div", { className: "flex flex-col md:flex-row items-start md:items-center justify-between gap-4 py-2" },
             h("div", null,
-              h("span", { className: "text-[10px] uppercase font-mono tracking-widest text-amber-400/80 bg-amber-400/10 px-2.5 py-1 rounded-full border border-amber-400/20" }, "Daily Sanctuary"),
-              h("h1", { className: "font-serif text-3xl md:text-4xl font-bold tracking-tight text-slate-100 mt-2" },
+              h("span", { className: "text-[10px] uppercase font-mono tracking-widest text-amber-800 bg-amber-100/80 px-2.5 py-1 rounded-full border border-amber-300 font-bold" }, "Daily Sanctuary"),
+              h("h1", { className: "font-serif text-3xl md:text-4xl font-bold tracking-tight text-amber-950 mt-2" },
                 "Greetings, " + (user?.username || "Writer")
               ),
-              h("p", { className: "text-xs md:text-sm text-slate-400 mt-1 font-light" },
+              h("p", { className: "text-xs md:text-sm text-[#7A6B5D] mt-1 font-light" },
                 "Select any calendar date to pen or revisit your one paragraph of gratitude."
               )
             ),
             h("button", {
               onClick: () => setIsPromptModalOpen(true),
-              className: "flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-amber-400/20 border border-white/10 hover:border-amber-400/30 text-xs text-slate-200 hover:text-amber-200 transition-all shadow-lg"
+              className: "flex items-center gap-2 px-4 py-2 rounded-full bg-white hover:bg-amber-100 border border-amber-200 text-xs font-semibold text-amber-900 transition-all shadow-sm"
             }, "✨ Prompt of the Day")
           ),
 
@@ -1624,9 +1632,9 @@ function Dashboard() {
       ) : (
         h("div", { className: "space-y-6" },
           h("div", { className: "py-2" },
-            h("span", { className: "text-[10px] uppercase font-mono tracking-widest text-amber-400/80 bg-amber-400/10 px-2.5 py-1 rounded-full border border-amber-400/20" }, "Chronicle Stream"),
-            h("h1", { className: "font-serif text-3xl md:text-4xl font-bold tracking-tight text-slate-100 mt-2" }, "Gratitude Reflections"),
-            h("p", { className: "text-xs md:text-sm text-slate-400 mt-1 font-light" },
+            h("span", { className: "text-[10px] uppercase font-mono tracking-widest text-amber-800 bg-amber-100/80 px-2.5 py-1 rounded-full border border-amber-300 font-bold" }, "Chronicle Stream"),
+            h("h1", { className: "font-serif text-3xl md:text-4xl font-bold tracking-tight text-amber-950 mt-2" }, "Gratitude Reflections"),
+            h("p", { className: "text-xs md:text-sm text-[#7A6B5D] mt-1 font-light" },
               "Browse, search, and export your entire chronological archive of daily moments."
             )
           ),

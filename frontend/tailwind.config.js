@@ -1,17 +1,33 @@
-﻿/** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: "class",
   content: ["./index.html", "./app.js"],
   theme: {
     extend: {
       colors: {
-        sanctuary: {
-          950: "#07090E",
-          900: "#0B0E15",
-          850: "#0E1118",
-          800: "#141824",
-          700: "#1B2130",
-          600: "#283147",
+        cream: {
+          50: "#FDFBF7",
+          100: "#FAF6EE",
+          200: "#F4EDE0",
+          300: "#EAE0CE",
+          400: "#DCBFA4",
+          500: "#C89F7D",
+          600: "#A97956",
+          700: "#81563B",
+          800: "#543725",
+          900: "#2E1E14",
+        },
+        espresso: {
+          950: "#1A130E",
+          900: "#291E16",
+          800: "#3D2E23",
+          700: "#574334",
+          600: "#745C4B",
+          500: "#937865",
+          400: "#B59C8A",
+          300: "#D6C4B6",
+          200: "#EADFD6",
+          100: "#F5EFEA",
+          50: "#FAF7F5",
         },
         gold: {
           50: "#FFFBEB",
@@ -24,6 +40,14 @@ module.exports = {
           700: "#B45309",
           800: "#92400E",
           900: "#78350F",
+        },
+        dreamy: {
+          peach: "#FFF1E6",
+          rose: "#FDE2E4",
+          sun: "#FFF8DC",
+          sky: "#E8F0FE",
+          sage: "#EAF4EC",
+          amber: "#FEF3C7",
         }
       },
       fontFamily: {
@@ -33,14 +57,11 @@ module.exports = {
       },
       boxShadow: {
         glow: "0 0 35px -5px rgba(245, 158, 11, 0.3)",
-        "glow-subtle": "0 0 20px 0 rgba(245, 158, 11, 0.15)",
-        glass: "0 10px 30px -5px rgba(0, 0, 0, 0.5)",
-      },
-      animation: {
-        "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "glow-pulse": "subtle-glow 3s ease-in-out infinite",
+        "glow-dream": "0 15px 35px -10px rgba(217, 119, 6, 0.25)",
+        dreamy: "0 20px 45px -15px rgba(180, 140, 100, 0.15), 0 0 1px 1px rgba(255, 255, 255, 0.9)",
       },
     },
   },
   plugins: [],
 };
+
