@@ -1,32 +1,20 @@
 {
-  "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "backend/journal_project/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.11" }
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
     },
     {
-      "src": "frontend/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/frontend/$1"
+      "source": "/admin/(.*)",
+      "destination": "/api/index.py"
     },
     {
-      "src": "/api/(.*)",
-      "dest": "backend/journal_project/wsgi.py"
+      "source": "/static/(.*)",
+      "destination": "/frontend/$1"
     },
     {
-      "src": "/admin/(.*)",
-      "dest": "backend/journal_project/wsgi.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/index.html"
+      "source": "/(.*)",
+      "destination": "/frontend/$1"
     }
   ]
 }
