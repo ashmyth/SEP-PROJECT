@@ -1,0 +1,9 @@
+{
+  "name": "solis-gratitude-journal",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "build:css": "cd frontend && npm run build:css"
+  }
+}
